@@ -51,6 +51,12 @@ class QuizScreen extends ConsumerWidget {
               _buildQuestionCard(question, quizState),
               const Gap(20),
               _buildOptions(question, quizState, ref),
+              if (quizState.status == QuizStatus.answered &&
+                  question.explanation != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: _buildExplanationBox(question.explanation!),
+                ),
               const Spacer(),
               _buildScoreDisplay(quizState),
             ],
@@ -171,6 +177,35 @@ class QuizScreen extends ConsumerWidget {
     }
     if (index == selected && selected != correctIndex) return OptionState.wrong;
     return OptionState.idle;
+  }
+
+  Widget _buildExplanationBox(String explanation) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.correct.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.correct.withOpacity(0.4)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.info_outline_rounded, color: AppColors.correct, size: 18),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              explanation,
+              style: const TextStyle(
+                color: AppColors.white,
+                fontSize: 13,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1, end: 0);
   }
 
   Widget _buildScoreDisplay(QuizState state) {

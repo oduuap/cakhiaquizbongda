@@ -12,6 +12,10 @@ class AppConstants {
   static const String keyTotalGames = 'total_games';
   static const String keyPlayerName = 'player_name';
   static const String keyScoreHistory = 'score_history';
+  static const String keyStreak = 'streak';
+  static const String keyLastPlayedDate = 'last_played_date';
+  static const String keyTotalCorrect = 'total_correct';
+  static const String keyTotalAnswered = 'total_answered';
 }
 
 enum QuizCategory {

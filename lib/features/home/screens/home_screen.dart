@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ca_khia_fc/core/constants/app_constants.dart';
 import 'package:ca_khia_fc/core/theme/app_theme.dart';
+import 'package:ca_khia_fc/data/models/question.dart';
 import 'package:ca_khia_fc/data/repositories/score_repository.dart';
 import 'package:ca_khia_fc/features/leaderboard/screens/leaderboard_screen.dart';
 import 'package:ca_khia_fc/features/quiz/providers/quiz_provider.dart';
@@ -22,6 +23,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _highScore = 0;
   int _totalGames = 0;
+  int _streak = 0;
+  double _accuracy = 0;
+  GameScore? _lastGame;
 
   @override
   void initState() {
@@ -45,6 +49,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _highScore = repo.getHighScore();
       _totalGames = repo.getTotalGames();
+      _streak = repo.getStreak();
+      _accuracy = repo.getOverallAccuracy();
+      _lastGame = repo.getLastGame();
     });
   }
 
@@ -70,6 +77,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               _buildHeroBanner(),
               const Gap(24),
               _buildStatsRow(),
+              const Gap(12),
+              _buildStatsRow2(),
+              if (_lastGame != null) ...[
+                const Gap(16),
+                _buildLastGameCard(_lastGame!),
+              ],
               const Gap(28),
               _buildCategoryTitle(),
               const Gap(16),
@@ -198,22 +211,89 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Row(
       children: [
         Expanded(
-          child: _buildStatCard(
-            '⭐ Điểm cao',
-            '$_highScore',
-            AppColors.secondary,
-          ),
+          child: _buildStatCard('⭐ Điểm cao', '$_highScore', AppColors.secondary),
         ),
         const Gap(12),
         Expanded(
-          child: _buildStatCard(
-            '🎮 Số trận',
-            '$_totalGames',
-            AppColors.correct,
-          ),
+          child: _buildStatCard('🎮 Số trận', '$_totalGames', AppColors.correct),
         ),
       ],
     ).animate().fadeIn(delay: 200.ms);
+  }
+
+  Widget _buildStatsRow2() {
+    final accuracyStr = _totalGames == 0
+        ? '--'
+        : '${(_accuracy * 100).toStringAsFixed(0)}%';
+    final streakStr = _streak == 0 ? '0' : '$_streak ngày';
+
+    return Row(
+      children: [
+        Expanded(
+          child: _buildStatCard('🎯 Tỷ lệ đúng', accuracyStr, const Color(0xFF00BCD4)),
+        ),
+        const Gap(12),
+        Expanded(
+          child: _buildStatCard('🔥 Chuỗi ngày', streakStr, const Color(0xFFFF5722)),
+        ),
+      ],
+    ).animate().fadeIn(delay: 250.ms);
+  }
+
+  Widget _buildLastGameCard(GameScore game) {
+    final pct = game.totalQuestions == 0
+        ? 0
+        : (game.correctCount * 100 ~/ game.totalQuestions);
+    final isGood = pct >= 70;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: AppColors.cardBg,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: (isGood ? AppColors.correct : AppColors.wrong).withOpacity(0.4),
+        ),
+      ),
+      child: Row(
+        children: [
+          Text(
+            isGood ? '🏆' : '💪',
+            style: const TextStyle(fontSize: 28),
+          ),
+          const Gap(12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Trận gần nhất',
+                  style: TextStyle(color: AppColors.grey, fontSize: 11),
+                ),
+                const Gap(2),
+                Text(
+                  '${game.correctCount}/${game.totalQuestions} câu đúng  •  ${game.score} điểm',
+                  style: const TextStyle(
+                    color: AppColors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            '$pct%',
+            style: TextStyle(
+              color: isGood ? AppColors.correct : AppColors.wrong,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(delay: 300.ms);
   }
 
   Widget _buildStatCard(String label, String value, Color color) {
@@ -232,7 +312,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             value,
             style: TextStyle(
               color: color,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
