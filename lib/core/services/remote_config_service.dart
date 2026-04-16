@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 
 class FeatureFlags {
   const FeatureFlags._();
@@ -37,7 +38,10 @@ class RemoteConfigService {
 
     await _rc.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
-      minimumFetchInterval: const Duration(hours: 1),
+      // Debug: fetch mỗi lần khởi động để test ngay
+      // Release: cache 1 giờ để tránh quota
+      minimumFetchInterval:
+          kDebugMode ? Duration.zero : const Duration(hours: 1),
     ));
 
     await _rc.setDefaults(_defaults);
