@@ -44,8 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Claude Code local config
+# Local IDE config
 .claude/
+.vscode/
 
 # Keystore — NEVER commit signing keys
 android/app/*.jks
