@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ca_khia_fc/core/services/remote_config_service.dart';
 import 'package:ca_khia_fc/core/theme/app_theme.dart';
 import 'package:ca_khia_fc/features/splash/screens/splash_screen.dart';
+import 'package:ca_khia_fc/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ Future<void> main() async {
   );
 
   // Init Firebase + Remote Config
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await RemoteConfigService.instance.initialize();
 
   runApp(const ProviderScope(child: CaKhiaFCApp()));
