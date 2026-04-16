@@ -47,6 +47,14 @@ app.*.map.json
 # Local IDE config
 .claude/
 .vscode/
+.metadata
+
+# iOS (Android-only app)
+ios/
+
+# Generated icon sizes (keep only icon_master.png)
+assets/images/android_*.png
+assets/images/play_store_512.png
 
 # Keystore — NEVER commit signing keys
 android/app/*.jks
