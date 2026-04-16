@@ -14,10 +14,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _configLoaded = false;
-  bool _showPanel = false;
-  List<FlagInfo> _flags = [];
-
   @override
   void initState() {
     super.initState();
@@ -27,28 +23,16 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initAndNavigate() async {
     final config = RemoteConfigService.instance;
 
-    // Respect minimum splash wait
     await Future.delayed(Duration(milliseconds: config.splashMinWaitMs));
 
     if (!mounted) return;
 
-    setState(() {
-      _configLoaded = true;
-      _flags = config.allFlags();
-      _showPanel = config.showFlagPanel;
-    });
-
-    // Maintenance mode ON → open URL instead of entering game
     if (config.maintenanceMode) {
       await _openMaintenanceUrl(config.maintenanceUrl);
       return;
     }
 
-    // Debug panel OFF → go straight to game
-    if (!_showPanel) {
-      _goHome();
-    }
-    // Debug panel ON → wait for user to tap "Vào app"
+    _goHome();
   }
 
   Future<void> _openMaintenanceUrl(String url) async {
@@ -80,15 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const Spacer(),
             _buildLogo(),
             const Spacer(),
-            if (_configLoaded && _showPanel) ...[
-              _buildFlagPanel(),
-              const Gap(20),
-              _buildEnterButton(),
-              const Gap(32),
-            ] else ...[
-              _buildLoadingDots(),
-              const Gap(48),
-            ],
+            _buildLoadingDots(),
+            const Gap(48),
           ],
         ),
       ),
@@ -148,106 +125,6 @@ class _SplashScreenState extends State<SplashScreen> {
             .then()
             .fadeOut(duration: 400.ms);
       }),
-    );
-  }
-
-  Widget _buildFlagPanel() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Row(
-            children: [
-              const Icon(Icons.tune_rounded, color: AppColors.secondary, size: 18),
-              const Gap(8),
-              const Text(
-                'Feature Flags',
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: AppColors.correct.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'Firebase Remote Config',
-                  style: TextStyle(
-                    color: AppColors.correct,
-                    fontSize: 9,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Gap(14),
-          ..._flags.map((f) => _buildFlagRow(f)),
-        ],
-      ),
-    ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1, end: 0);
-  }
-
-  Widget _buildFlagRow(FlagInfo flag) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 11),
-      child: Row(
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: flag.enabled ? AppColors.correct : AppColors.grey,
-            ),
-          ),
-          const Gap(10),
-          Expanded(
-            child: Text(
-              flag.label,
-              style: const TextStyle(color: AppColors.white, fontSize: 13),
-            ),
-          ),
-          Text(
-            flag.value,
-            style: TextStyle(
-              color: flag.enabled ? AppColors.correct : AppColors.grey,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEnterButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton.icon(
-          onPressed: _goHome,
-          icon: const Icon(Icons.play_arrow_rounded),
-          label: const Text('Vào game'),
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-          ),
-        ),
-      ),
     );
   }
 }
