@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ca_khia_fc/core/constants/app_constants.dart';
+import 'package:ca_khia_fc/core/services/analytics_service.dart';
 import 'package:ca_khia_fc/data/models/question.dart';
 import 'package:ca_khia_fc/data/repositories/question_repository.dart';
 
@@ -55,6 +56,7 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   final QuestionRepository _repo;
   Timer? _timer;
+  String _currentCategory = '';
 
   QuizNotifier(this._repo)
       : super(const QuizState(
@@ -68,6 +70,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
         ));
 
   void startGame(QuizCategory category) {
+    _currentCategory = category.label;
     final questions = _repo.getRandomQuestions(category, AppConstants.questionsPerGame);
     state = QuizState(
       questions: questions,
@@ -79,6 +82,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
       status: QuizStatus.running,
     );
     _startTimer();
+    AnalyticsService.instance.logQuizStart(category: _currentCategory);
   }
 
   void _startTimer() {
@@ -94,6 +98,16 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void _onTimeUp() {
     _timer?.cancel();
+    final question = state.currentQuestion;
+    if (question != null) {
+      AnalyticsService.instance.logQuestionAnswered(
+        category: _currentCategory,
+        questionIndex: state.currentIndex,
+        selectedIndex: -1,
+        correctIndex: question.correctIndex,
+        timeLeft: 0,
+      );
+    }
     state = state.copyWith(
       status: QuizStatus.answered,
       selectedOptionIndex: -1, // -1 = time up, no answer selected
@@ -109,6 +123,14 @@ class QuizNotifier extends StateNotifier<QuizState> {
     final isCorrect = index == question.correctIndex;
     final timeBonus = isCorrect ? (state.timeLeft * AppConstants.bonusPointsForSpeed ~/ AppConstants.secondsPerQuestion) : 0;
     final points = isCorrect ? AppConstants.pointsPerCorrectAnswer + timeBonus : 0;
+
+    AnalyticsService.instance.logQuestionAnswered(
+      category: _currentCategory,
+      questionIndex: state.currentIndex,
+      selectedIndex: index,
+      correctIndex: question.correctIndex,
+      timeLeft: state.timeLeft,
+    );
 
     state = state.copyWith(
       selectedOptionIndex: index,

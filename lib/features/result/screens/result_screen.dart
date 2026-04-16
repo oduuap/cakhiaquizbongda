@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ca_khia_fc/core/constants/app_constants.dart';
+import 'package:ca_khia_fc/core/services/analytics_service.dart';
 import 'package:ca_khia_fc/core/theme/app_theme.dart';
 import 'package:ca_khia_fc/data/models/question.dart';
 import 'package:ca_khia_fc/data/repositories/score_repository.dart';
@@ -50,6 +51,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       playedAt: DateTime.now(),
       category: widget.category.label,
     ));
+    AnalyticsService.instance.logQuizComplete(
+      category: widget.category.label,
+      score: widget.score,
+      correctCount: widget.correctCount,
+      totalQuestions: widget.totalQuestions,
+    );
   }
 
   String get _rankEmoji {
