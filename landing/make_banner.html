@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { margin: 0; background: #222; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; }
+  canvas { border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,.6); }
+  button {
+    padding: 12px 28px;
+    background: #E8A020;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<canvas id="c" width="1024" height="500"></canvas>
+<button onclick="download()">⬇ Tải PNG (1024×500)</button>
+
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = 1024, H = 500;
+
+// ── BG gradient ──────────────────────────────────────────────────────────────
+const bg = ctx.createLinearGradient(0, 0, W, H);
+bg.addColorStop(0,   '#0A081E');
+bg.addColorStop(0.5, '#110E2E');
+bg.addColorStop(1,   '#0D1A3A');
+ctx.fillStyle = bg;
+ctx.fillRect(0, 0, W, H);
+
+// ── Decorative circles ───────────────────────────────────────────────────────
+function circle(x, y, r, color) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+circle(820, 80,  180, 'rgba(232,160,32,.07)');
+circle(900, 420, 120, 'rgba(59,130,246,.06)');
+circle(60,  350,  90, 'rgba(232,160,32,.05)');
+circle(160,  50, 220, 'rgba(34,197,94,.04)');
+
+// ── Hexagon grid (subtle) ────────────────────────────────────────────────────
+ctx.strokeStyle = 'rgba(255,255,255,.03)';
+ctx.lineWidth = 1;
+const hSize = 36;
+for (let row = -1; row < H/hSize + 2; row++) {
+  for (let col = -1; col < W/(hSize*1.73) + 2; col++) {
+    const cx = col * hSize * 1.73 + (row % 2) * hSize * 0.865;
+    const cy = row * hSize * 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = Math.PI/3 * i - Math.PI/6;
+      const px = cx + hSize * Math.cos(a);
+      const py = cy + hSize * Math.sin(a);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+}
+
+// ── Golden glow behind trophy ─────────────────────────────────────────────────
+const glow = ctx.createRadialGradient(200, H/2, 0, 200, H/2, 220);
+glow.addColorStop(0,   'rgba(232,160,32,.25)');
+glow.addColorStop(1,   'rgba(232,160,32,0)');
+ctx.fillStyle = glow;
+ctx.fillRect(0, 0, W, H);
+
+// ── Trophy emoji ──────────────────────────────────────────────────────────────
+ctx.font = '160px serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('🏆', 195, H/2 - 10);
+
+// ── Ball emoji (small, floating) ──────────────────────────────────────────────
+ctx.font = '64px serif';
+ctx.fillText('⚽', 330, 95);
+
+// ── App name ──────────────────────────────────────────────────────────────────
+// Shadow
+ctx.shadowColor = 'rgba(232,160,32,.5)';
+ctx.shadowBlur  = 30;
+
+const titleGrad = ctx.createLinearGradient(380, 140, 900, 240);
+titleGrad.addColorStop(0, '#F8D060');
+titleGrad.addColorStop(1, '#E8A020');
+
+ctx.font = 'bold 88px -apple-system, "Segoe UI", sans-serif';
+ctx.textAlign = 'left';
+ctx.fillStyle = titleGrad;
+ctx.fillText('Gôn! Quiz', 380, 195);
+
+ctx.shadowBlur = 0;
+
+// ── Tagline ───────────────────────────────────────────────────────────────────
+ctx.font = '600 32px -apple-system, "Segoe UI", sans-serif';
+ctx.fillStyle = '#A0B4D0';
+ctx.fillText('Thách thức tri thức bóng đá Việt Nam', 380, 258);
+
+// ── Divider line ──────────────────────────────────────────────────────────────
+ctx.strokeStyle = 'rgba(232,160,32,.4)';
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(380, 294);
+ctx.lineTo(920, 294);
+ctx.stroke();
+
+// ── Feature pills ─────────────────────────────────────────────────────────────
+const pills = ['🏆  V-League', '🇻🇳  Đội tuyển', '🌍  Thế giới', '🔥  Ca Khía'];
+let px = 380;
+ctx.font = '500 22px -apple-system, "Segoe UI", sans-serif';
+for (const pill of pills) {
+  const tw = ctx.measureText(pill).width;
+  const pw = tw + 32;
+  const py = 316, ph = 44, pr = 22;
+
+  // pill bg
+  ctx.fillStyle = 'rgba(255,255,255,.07)';
+  ctx.beginPath();
+  ctx.roundRect(px, py, pw, ph, pr);
+  ctx.fill();
+
+  // pill border
+  ctx.strokeStyle = 'rgba(255,255,255,.12)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // text
+  ctx.fillStyle = '#D0CCEE';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(pill, px + 16, py + ph/2);
+
+  px += pw + 12;
+}
+
+// ── Bottom badge ──────────────────────────────────────────────────────────────
+const bx = 380, by = 392, bw = 300, bh = 52, br = 26;
+const badgeBg = ctx.createLinearGradient(bx, by, bx+bw, by);
+badgeBg.addColorStop(0, '#E8A020');
+badgeBg.addColorStop(1, '#F97316');
+ctx.fillStyle = badgeBg;
+ctx.shadowColor = 'rgba(232,160,32,.5)';
+ctx.shadowBlur  = 20;
+ctx.beginPath();
+ctx.roundRect(bx, by, bw, bh, br);
+ctx.fill();
+ctx.shadowBlur = 0;
+
+ctx.fillStyle = '#000';
+ctx.font = 'bold 22px -apple-system, "Segoe UI", sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('📲  Tải miễn phí trên CH Play', bx + bw/2, by + bh/2);
+
+// ── Stars decoration ──────────────────────────────────────────────────────────
+ctx.font = '18px serif';
+ctx.fillStyle = 'rgba(232,160,32,.6)';
+const stars = [[720,410],[760,430],[800,412],[840,435],[880,415]];
+for (const [sx, sy] of stars) ctx.fillText('★', sx, sy);
+ctx.font = '13px sans-serif';
+ctx.fillStyle = '#8B8AA0';
+ctx.textAlign = 'left';
+ctx.textBaseline = 'middle';
+ctx.fillText('4.9 / 5.0', 892, 422);
+
+function download() {
+  const a = document.createElement('a');
+  a.download = 'gon-quiz-banner-1024x500.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>

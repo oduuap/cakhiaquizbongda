@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "408976118138",
+    "project_id": "cakhiaquiz",
+    "storage_bucket": "cakhiaquiz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408976118138:android:551de0299a7cddb3ca86c3",
+        "android_client_info": {
+          "package_name": "com.cakhia.ca_khia_fc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt2KPknWGScJk6P3dy_bGjtdtLfI6jmQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

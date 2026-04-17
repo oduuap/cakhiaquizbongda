@@ -4,8 +4,8 @@ class AppConstants {
   static const int pointsPerCorrectAnswer = 100;
   static const int bonusPointsForSpeed = 50;
 
-  static const String appName = 'Ca Khía FC';
-  static const String tagline = 'Thách thức tri thức bóng đá!';
+  static const String appName = 'Gôn! Quiz';
+  static const String tagline = 'Thách thức tri thức bóng đá Việt Nam!';
 
   // SharedPreferences keys
   static const String keyHighScore = 'high_score';

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="ca_khia_fc"
+        android:label="Gôn! Quiz"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
