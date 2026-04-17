@@ -1,4 +1,4 @@
-# Ca Khía FC – Quiz Bóng Đá Việt Nam ⚽
+# Gôn! Quiz – Thách thức tri thức bóng đá Việt Nam ⚽
 
 Ứng dụng quiz bóng đá dành cho người hâm mộ Việt Nam. Thử thách kiến thức về V.League, World Cup, Champions League và các huyền thoại bóng đá.
 
@@ -40,7 +40,7 @@ flutter build apk --release
 ### Tạo lại icon
 
 ```bash
-python3 scripts/generate_icon.py
+python3 scripts/generate_assets.py
 dart run flutter_launcher_icons
 ```
 
@@ -62,7 +62,7 @@ assets/
 ├── images/         # Icon app
 └── sounds/         # Âm thanh
 scripts/
-└── generate_icon.py # Tạo icon bằng Python/Pillow
+└── generate_assets.py # Tạo icon & banner bằng Python/Pillow
 ```
 
 ---
@@ -75,9 +75,9 @@ scripts/
 
 ## Liên hệ
 
-Email: support@cakhiafc.app  
+Email: support@gonquiz.app  
 Quốc gia: Việt Nam 🇻🇳
 
 ---
 
-© 2025 Ca Khía FC. Made with ❤️ tại Việt Nam.
+© 2025 Gôn! Quiz. Made with ❤️ tại Việt Nam.
