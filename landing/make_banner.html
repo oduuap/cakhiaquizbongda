@@ -66,25 +66,31 @@ for (let row = -1; row < H/hSize + 2; row++) {
   }
 }
 
-// ── Golden glow behind trophy ─────────────────────────────────────────────────
+// ── Golden glow behind football ───────────────────────────────────────────────
 const glow = ctx.createRadialGradient(200, H/2, 0, 200, H/2, 220);
 glow.addColorStop(0,   'rgba(232,160,32,.25)');
 glow.addColorStop(1,   'rgba(232,160,32,0)');
 ctx.fillStyle = glow;
 ctx.fillRect(0, 0, W, H);
 
-// ── Trophy emoji ──────────────────────────────────────────────────────────────
-ctx.font = '160px serif';
+// ── Football emoji ────────────────────────────────────────────────────────────
+ctx.font = '200px serif';
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
-ctx.fillText('🏆', 195, H/2 - 10);
+ctx.fillText('⚽', 195, H/2 + 10);
 
-// ── Ball emoji (small, floating) ──────────────────────────────────────────────
-ctx.font = '64px serif';
-ctx.fillText('⚽', 330, 95);
+// ── "Gôn!" floating label above football ─────────────────────────────────────
+ctx.font = 'bold 52px -apple-system, "Segoe UI", sans-serif';
+ctx.shadowColor = 'rgba(232,160,32,0.7)';
+ctx.shadowBlur = 24;
+const miniGrad = ctx.createLinearGradient(100, 0, 290, 0);
+miniGrad.addColorStop(0, '#F8D060');
+miniGrad.addColorStop(1, '#E8A020');
+ctx.fillStyle = miniGrad;
+ctx.fillText('Gôn!', 195, 90);
+ctx.shadowBlur = 0;
 
 // ── App name ──────────────────────────────────────────────────────────────────
-// Shadow
 ctx.shadowColor = 'rgba(232,160,32,.5)';
 ctx.shadowBlur  = 30;
 
@@ -92,57 +98,54 @@ const titleGrad = ctx.createLinearGradient(380, 140, 900, 240);
 titleGrad.addColorStop(0, '#F8D060');
 titleGrad.addColorStop(1, '#E8A020');
 
-ctx.font = 'bold 88px -apple-system, "Segoe UI", sans-serif';
+ctx.font = 'bold 96px -apple-system, "Segoe UI", sans-serif';
 ctx.textAlign = 'left';
 ctx.fillStyle = titleGrad;
-ctx.fillText('Gôn! Quiz', 380, 195);
+ctx.fillText('Gôn! Quiz', 370, 195);
 
 ctx.shadowBlur = 0;
 
 // ── Tagline ───────────────────────────────────────────────────────────────────
-ctx.font = '600 32px -apple-system, "Segoe UI", sans-serif';
+ctx.font = '600 30px -apple-system, "Segoe UI", sans-serif';
 ctx.fillStyle = '#A0B4D0';
-ctx.fillText('Thách thức tri thức bóng đá Việt Nam', 380, 258);
+ctx.fillText('Thách thức tri thức bóng đá Việt Nam', 370, 260);
 
 // ── Divider line ──────────────────────────────────────────────────────────────
 ctx.strokeStyle = 'rgba(232,160,32,.4)';
 ctx.lineWidth = 2;
 ctx.beginPath();
-ctx.moveTo(380, 294);
-ctx.lineTo(920, 294);
+ctx.moveTo(370, 296);
+ctx.lineTo(960, 296);
 ctx.stroke();
 
 // ── Feature pills ─────────────────────────────────────────────────────────────
 const pills = ['🏆  V-League', '🇻🇳  Đội tuyển', '🌍  Thế giới', '🔥  Ca Khía'];
-let px = 380;
-ctx.font = '500 22px -apple-system, "Segoe UI", sans-serif';
+let px = 370;
+ctx.font = '500 21px -apple-system, "Segoe UI", sans-serif';
 for (const pill of pills) {
   const tw = ctx.measureText(pill).width;
   const pw = tw + 32;
-  const py = 316, ph = 44, pr = 22;
+  const py = 318, ph = 42, pr = 21;
 
-  // pill bg
   ctx.fillStyle = 'rgba(255,255,255,.07)';
   ctx.beginPath();
   ctx.roundRect(px, py, pw, ph, pr);
   ctx.fill();
 
-  // pill border
   ctx.strokeStyle = 'rgba(255,255,255,.12)';
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  // text
   ctx.fillStyle = '#D0CCEE';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   ctx.fillText(pill, px + 16, py + ph/2);
 
-  px += pw + 12;
+  px += pw + 10;
 }
 
-// ── Bottom badge ──────────────────────────────────────────────────────────────
-const bx = 380, by = 392, bw = 300, bh = 52, br = 26;
+// ── Bottom CTA badge ──────────────────────────────────────────────────────────
+const bx = 370, by = 392, bw = 316, bh = 52, br = 26;
 const badgeBg = ctx.createLinearGradient(bx, by, bx+bw, by);
 badgeBg.addColorStop(0, '#E8A020');
 badgeBg.addColorStop(1, '#F97316');
@@ -155,21 +158,21 @@ ctx.fill();
 ctx.shadowBlur = 0;
 
 ctx.fillStyle = '#000';
-ctx.font = 'bold 22px -apple-system, "Segoe UI", sans-serif';
+ctx.font = 'bold 21px -apple-system, "Segoe UI", sans-serif';
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 ctx.fillText('📲  Tải miễn phí trên CH Play', bx + bw/2, by + bh/2);
 
-// ── Stars decoration ──────────────────────────────────────────────────────────
+// ── Stars rating ──────────────────────────────────────────────────────────────
 ctx.font = '18px serif';
 ctx.fillStyle = 'rgba(232,160,32,.6)';
-const stars = [[720,410],[760,430],[800,412],[840,435],[880,415]];
+const stars = [[730,410],[768,430],[806,412],[844,435],[882,415]];
 for (const [sx, sy] of stars) ctx.fillText('★', sx, sy);
 ctx.font = '13px sans-serif';
 ctx.fillStyle = '#8B8AA0';
 ctx.textAlign = 'left';
 ctx.textBaseline = 'middle';
-ctx.fillText('4.9 / 5.0', 892, 422);
+ctx.fillText('4.9 / 5.0', 900, 422);
 
 function download() {
   const a = document.createElement('a');

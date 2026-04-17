@@ -1,4 +1,4 @@
-package com.cakhia.ca_khia_fc
+package com.cakhia.gonquiz
 
 import io.flutter.embedding.android.FlutterActivity
 

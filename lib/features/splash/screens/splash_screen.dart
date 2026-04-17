@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
         const Gap(20),
         const Text(
-          'Ca Khía FC',
+          'Gôn! Quiz',
           style: TextStyle(
             color: AppColors.white,
             fontSize: 32,
@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ).animate().fadeIn(delay: 300.ms, duration: 500.ms),
         const Gap(6),
         const Text(
-          'Quiz Bóng Đá Việt Nam',
+          'Thách thức tri thức bóng đá Việt Nam',
           style: TextStyle(color: AppColors.grey, fontSize: 14),
         ).animate().fadeIn(delay: 500.ms, duration: 500.ms),
       ],

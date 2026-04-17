@@ -52,7 +52,7 @@ class _ConsentDialogState extends State<_ConsentDialog> {
           Text('⚽', style: TextStyle(fontSize: 40)),
           Gap(8),
           Text(
-            'Chào mừng đến Ca Khía FC!',
+            'Chào mừng đến Gôn! Quiz!',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.white,

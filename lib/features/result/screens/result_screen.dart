@@ -69,7 +69,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
 
   String get _rankTitle {
     final ratio = widget.correctCount / widget.totalQuestions;
-    if (ratio >= 0.9) return 'Vua Ca Khía!';
+    if (ratio >= 0.9) return 'Vua Gôn! Quiz!';
     if (ratio >= 0.7) return 'Cao Thủ!';
     if (ratio >= 0.5) return 'Dân Chơi!';
     return 'Tân Binh!';
@@ -78,14 +78,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   String get _rankComment {
     final ratio = widget.correctCount / widget.totalQuestions;
     if (ratio >= 0.9) return 'Xuất sắc! Bạn biết tất cả về bóng đá Việt Nam 🎉';
-    if (ratio >= 0.7) return 'Không tệ! Chút nữa là Vua Ca Khía rồi 💪';
+    if (ratio >= 0.7) return 'Không tệ! Chút nữa là Vua Gôn! Quiz rồi 💪';
     if (ratio >= 0.5) return 'Ổn đấy, nhưng cần cày thêm đấy nhé 😄';
     return 'Còn nhiều điều cần học hỏi, cố lên! 📚';
   }
 
   void _shareResult() {
     final text =
-        'Tôi vừa đạt ${widget.score} điểm trong Ca Khía FC Quiz!\n'
+        'Tôi vừa đạt ${widget.score} điểm trong Gôn! Quiz!\n'
         'Trả lời đúng ${widget.correctCount}/${widget.totalQuestions} câu.\n'
         'Danh hiệu: $_rankTitle $_rankEmoji\n'
         'Bạn có thể làm tốt hơn không? 🔥';

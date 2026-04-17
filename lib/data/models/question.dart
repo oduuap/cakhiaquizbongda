@@ -38,7 +38,7 @@ class GameScore {
   double get accuracy => correctCount / totalQuestions;
 
   String get rank {
-    if (accuracy >= 0.9) return 'Vua Ca Khía 👑';
+    if (accuracy >= 0.9) return 'Vua Gôn! 👑';
     if (accuracy >= 0.7) return 'Cao Thủ 🔥';
     if (accuracy >= 0.5) return 'Dân Chơi 😎';
     return 'Tân Binh 🐣';

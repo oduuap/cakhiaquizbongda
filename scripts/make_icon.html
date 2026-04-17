@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { margin: 0; background: #111; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; }
+  canvas { border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,.8); }
+  button {
+    padding: 12px 28px;
+    background: #E8A020;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<canvas id="c" width="1024" height="1024"></canvas>
+<button onclick="download()">⬇ Tải icon_master.png (1024×1024)</button>
+
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const S = 1024;
+
+// ── Background gradient (deep navy) ──────────────────────────────────────────
+const bg = ctx.createLinearGradient(0, 0, S, S);
+bg.addColorStop(0, '#0A081E');
+bg.addColorStop(0.6, '#12103A');
+bg.addColorStop(1, '#0D1A3A');
+ctx.fillStyle = bg;
+ctx.fillRect(0, 0, S, S);
+
+// ── Outer golden ring ─────────────────────────────────────────────────────────
+const ringGrad = ctx.createLinearGradient(0, 0, S, S);
+ringGrad.addColorStop(0, '#F8D060');
+ringGrad.addColorStop(0.5, '#E8A020');
+ringGrad.addColorStop(1, '#F97316');
+
+ctx.beginPath();
+ctx.arc(S/2, S/2, 460, 0, Math.PI*2);
+ctx.strokeStyle = ringGrad;
+ctx.lineWidth = 32;
+ctx.stroke();
+
+// ── Inner subtle ring ─────────────────────────────────────────────────────────
+ctx.beginPath();
+ctx.arc(S/2, S/2, 410, 0, Math.PI*2);
+ctx.strokeStyle = 'rgba(248,208,96,0.2)';
+ctx.lineWidth = 2;
+ctx.stroke();
+
+// ── Radial glow in center ─────────────────────────────────────────────────────
+const glow = ctx.createRadialGradient(S/2, S/2-40, 0, S/2, S/2, 380);
+glow.addColorStop(0, 'rgba(232,160,32,0.22)');
+glow.addColorStop(1, 'rgba(232,160,32,0)');
+ctx.fillStyle = glow;
+ctx.fillRect(0, 0, S, S);
+
+// ── Football ⚽ ───────────────────────────────────────────────────────────────
+ctx.font = '340px serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('⚽', S/2, S/2 + 40);
+
+// ── "Gôn!" text ───────────────────────────────────────────────────────────────
+ctx.shadowColor = 'rgba(232,160,32,0.8)';
+ctx.shadowBlur = 40;
+
+const titleGrad = ctx.createLinearGradient(S/2 - 200, 0, S/2 + 200, 0);
+titleGrad.addColorStop(0, '#F8D060');
+titleGrad.addColorStop(1, '#E8A020');
+
+ctx.font = 'bold 220px -apple-system, "Segoe UI", sans-serif';
+ctx.fillStyle = titleGrad;
+ctx.fillText('Gôn!', S/2, 240);
+
+ctx.shadowBlur = 0;
+
+// ── "QUIZ" label at bottom ────────────────────────────────────────────────────
+ctx.font = 'bold 96px -apple-system, "Segoe UI", sans-serif';
+ctx.fillStyle = 'rgba(255,255,255,0.85)';
+ctx.letterSpacing = '12px';
+ctx.fillText('QUIZ', S/2, 870);
+
+function download() {
+  const a = document.createElement('a');
+  a.download = 'icon_master.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>

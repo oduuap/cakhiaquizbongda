@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.cakhia.ca_khia_fc"
+    namespace = "com.cakhia.gonquiz"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -22,15 +22,15 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("ca-khia-fc.jks")
-            storePassword = "CaKhiaFC@2024"
-            keyAlias = "ca-khia-fc"
-            keyPassword = "CaKhiaFC@2024"
+            storeFile = file("gonquiz.jks")
+            storePassword = "GonQuiz@2024"
+            keyAlias = "gonquiz"
+            keyPassword = "GonQuiz@2024"
         }
     }
 
     defaultConfig {
-        applicationId = "com.cakhia.ca_khia_fc"
+        applicationId = "com.cakhia.gonquiz"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

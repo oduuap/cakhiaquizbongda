@@ -84,7 +84,7 @@ class _AboutScreenState extends State<AboutScreen> {
           const Text('⚽', style: TextStyle(fontSize: 56)),
           const Gap(8),
           const Text(
-            'Ca Khía FC',
+            'Gôn! Quiz',
             style: TextStyle(
               color: AppColors.white,
               fontSize: 24,
@@ -93,7 +93,7 @@ class _AboutScreenState extends State<AboutScreen> {
           ),
           const Gap(4),
           const Text(
-            'Quiz Bóng Đá Việt Nam',
+            'Thách thức tri thức bóng đá Việt Nam',
             style: TextStyle(color: Colors.white70, fontSize: 14),
           ),
           if (_version.isNotEmpty) ...[
@@ -152,7 +152,7 @@ class _AboutScreenState extends State<AboutScreen> {
       _PolicySection(
         title: '1. Thông tin chúng tôi thu thập',
         body:
-            'Ứng dụng Ca Khía FC KHÔNG thu thập bất kỳ thông tin cá nhân nào. '
+            'Ứng dụng Gôn! Quiz KHÔNG thu thập bất kỳ thông tin cá nhân nào. '
             'Tất cả dữ liệu (điểm số, lịch sử chơi) chỉ được lưu trữ cục bộ '
             'trên thiết bị của bạn và không được gửi đến bất kỳ máy chủ nào.',
       ),
@@ -227,7 +227,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
   Widget _buildTerms() {
     return const Text(
-      'Bằng cách sử dụng Ca Khía FC, bạn đồng ý với các điều khoản sau:\n\n'
+      'Bằng cách sử dụng Gôn! Quiz, bạn đồng ý với các điều khoản sau:\n\n'
       '• Ứng dụng chỉ dành cho mục đích giải trí.\n'
       '• Nội dung câu hỏi được biên soạn theo thông tin công khai về bóng đá.\n'
       '• Chúng tôi không chịu trách nhiệm về tính chính xác tuyệt đối '
@@ -247,7 +247,7 @@ class _AboutScreenState extends State<AboutScreen> {
           style: TextStyle(color: AppColors.grey, fontSize: 13, height: 1.5),
         ),
         const Gap(8),
-        _contactRow(Icons.email_outlined, 'support@cakhiafc.app'),
+        _contactRow(Icons.email_outlined, 'support@gonquiz.app'),
         const Gap(4),
         _contactRow(Icons.language_outlined, 'Việt Nam 🇻🇳'),
       ],
@@ -267,7 +267,7 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget _buildFooter() {
     return Center(
       child: Text(
-        '© 2025 Ca Khía FC. All rights reserved.\nMade with ❤️ in Việt Nam',
+        '© 2025 Gôn! Quiz. All rights reserved.\nMade with ❤️ in Việt Nam',
         textAlign: TextAlign.center,
         style: TextStyle(
           color: AppColors.grey.withValues(alpha: 0.6),

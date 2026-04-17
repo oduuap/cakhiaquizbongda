@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'Ca Khía FC ⚽',
+              'Gôn! Quiz ⚽',
               style: TextStyle(
                 color: AppColors.white,
                 fontSize: 22,
@@ -170,7 +170,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '🔥 Ca Khía\nThách Thức!',
+            '🔥 Gôn! Quiz\nThách Thức!',
             style: TextStyle(
               color: AppColors.white,
               fontSize: 28,

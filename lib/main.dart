@@ -23,16 +23,16 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await RemoteConfigService.instance.initialize();
 
-  runApp(const ProviderScope(child: CaKhiaFCApp()));
+  runApp(const ProviderScope(child: GonQuizApp()));
 }
 
-class CaKhiaFCApp extends StatelessWidget {
-  const CaKhiaFCApp({super.key});
+class GonQuizApp extends StatelessWidget {
+  const GonQuizApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ca Khía FC',
+      title: 'Gôn! Quiz',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
       home: const SplashScreen(),

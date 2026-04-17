@@ -1,5 +1,5 @@
 // Generated manually from google-services.json
-// Project: cakhiaquiz | Package: com.cakhia.ca_khia_fc
+// Project: cakhiaquiz | Package: com.cakhia.gonquiz
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform, kIsWeb;
@@ -27,7 +27,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCt2KPknWGScJk6P3dy_bGjtdtLfI6jmQo',
-    appId: '1:408976118138:android:551de0299a7cddb3ca86c3',
+    appId: '1:408976118138:android:5427b8ec1cbccddcca86c3',
     messagingSenderId: '408976118138',
     projectId: 'cakhiaquiz',
     storageBucket: 'cakhiaquiz.firebasestorage.app',
